@@ -1,0 +1,45 @@
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding: 20px;
+}
+label {
+    margin-bottom: 5px;
+}
+input {
+    margin-bottom: 20px;
+    border-radius: 4px;
+    padding: 5px;
+}
+button {
+    min-width: 60%;
+    align-self: center;
+    border-radius: 5px;
+    background-color: #8b8be6;
+    color: white;
+    padding: 5px;
+}
+.disabled {
+    background-color: rgba(139, 139, 230, 0.5);
+}
+.error {
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+.success {
+    background-color: green;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 5px;
+
+}

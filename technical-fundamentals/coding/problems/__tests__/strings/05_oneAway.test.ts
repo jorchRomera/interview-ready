@@ -3,11 +3,14 @@ import oneAway from "../../05_oneAway";
 describe("05 - oneAway", () => {
   test("One Away - Replace", () => {
     expect(oneAway("pale", "bale")).toEqual(true); // Replacement
+  });
+
+  test("Two Away - Replace", () => {
     expect(oneAway("bbaa", "bcca")).toEqual(false); // Replacement
   });
 
-  test("One Away - Replace", () => {
-    expect(oneAway("pale", "bale")).toEqual(true); // Replacement
+  test("Jorch - Replace", () => {
+    expect(oneAway("palesa", "pale")).toEqual(false); // Replacement
   });
 
   test("One Away - Insert", () => {
