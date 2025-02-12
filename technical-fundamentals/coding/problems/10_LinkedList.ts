@@ -35,7 +35,7 @@ export class LinkedList<T> {
     return list
   }
 
-  visit(fn: (node: Node<T>, index: number) => any) {
+  visit(fn: (node: Node<T>, index: number) => unknown) {
     let index = 0
     let p = this.head
 
