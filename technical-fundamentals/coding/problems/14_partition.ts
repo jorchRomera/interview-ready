@@ -22,4 +22,12 @@ export type Node<T> = {
 export default function partition<T>(
   head: Node<T> | undefined,
   x: T,
-): Node<T> | undefined {}
+): Node<T> | undefined {
+  const queue: LinkedList<T> = new LinkedList()
+  const list = new LinkedList(head)
+  return list.filter(node => {
+    const isLowerThanValue = node.value < x
+    if (!isLowerThanValue) queue.push(node.value)
+    return isLowerThanValue
+  }).merge(queue).head
+}

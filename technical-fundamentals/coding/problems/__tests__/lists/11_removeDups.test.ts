@@ -54,4 +54,18 @@ describe("11 - removeDups", () => {
     const result = removeDups(node1);
     expect(result).toEqual(node1);
   });
+
+  test.skip("unsorted duplicates in linked list", () => {
+    const node1 = { value: "a" } as Node<string>;
+    const node2 = { value: "b" } as Node<string>;
+    const node3 = { value: "a" } as Node<string>;
+    node1.next = node2;
+    node2.next = node3;
+
+    const expected = { value: "a" } as Node<string>;
+    expected.next = { value: "b" } as Node<string>;
+
+    const result = removeDups(node1);
+    expect(result).toEqual(expected);
+  });
 });

@@ -72,4 +72,42 @@ describe("intersection", () => {
     const result = intersection(list1, list2);
     expect(result).toEqual(list1);
   });
+
+  test("returns intersection node when lists intersect in the middle", () => {
+    // Common part:  3 -> 4 -> 5
+    // List 1: 3 -> 4 -> 5 -> 6 -> 7
+    // List 2: 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 8 -> 9
+    const commonPart: Node<number> = {
+      value: 3,
+      next: { value: 4, next: { value: 5 } },
+    };
+    const list1: Node<number> = {
+      value: 3,
+      next: {
+        value: 4,
+        next: {
+          value: 5,
+          next: {
+            value: 6,
+            next: { value: 7 },
+          },
+        },
+      },
+    };
+    const list2: Node<number> = {
+      value: 0,
+      next: {
+        value: 1,
+        next: {
+          value: 2,
+          next: {
+            value: 3,
+            next: { value: 4, next: { value: 5, next: { value: 8, next: { value: 9 } } } },
+          },
+        },
+      },
+    };
+    const result = intersection(list1, list2);
+    expect(result).toEqual(commonPart);
+  });
 });

@@ -9,4 +9,13 @@ export type Node<T> = {
   next?: Node<T>;
 };
 
-export default function isPalindrome<T>(head: Node<T> | undefined): boolean {}
+export default function isPalindrome<T>(head: Node<T> | undefined): boolean {
+  const li = new LinkedList(head)
+  const arr: T[] = []
+  li.visit((node) => arr.push(node.value))
+  const length = arr.length
+  for (let i = 0; i <= length / 2; i++) {
+    if (arr[i] !== arr[length - 1 - i]) return false
+  }
+  return true
+}

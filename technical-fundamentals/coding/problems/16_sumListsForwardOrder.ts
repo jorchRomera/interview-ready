@@ -13,7 +13,7 @@
 // Output:9 -> 1 -> 2,Thatis,912.
 // ```
 
-import { LinkedList } from "./10_LinkedList";
+import { LinkedList } from './10_LinkedList'
 
 export type Node<T> = {
   value: T;
@@ -23,4 +23,24 @@ export type Node<T> = {
 export default function sumListsForwardOrder(
   list1: Node<number> | undefined,
   list2: Node<number> | undefined,
-): Node<number> | undefined {}
+): Node<number> | undefined {
+  if (!list1) return list2
+  if (!list2) return list1
+  const l1 = new LinkedList(list1)
+  const l2 = new LinkedList(list2)
+  let sumList: LinkedList<number> = new LinkedList()
+  let p1 = l1.head
+  let p2 = l2.head
+  const arr1 = []
+  const arr2 = []
+  while (p1 || p2) {
+    if (p1) arr1.push(p1.value)
+    if (p2) arr2.push(p2.value)
+    p1 = p1?.next
+    p2 = p2?.next
+  }
+  (Number(arr1.join('')) + Number(arr2.join(''))).toString().split('').forEach((value) => {
+    sumList.push(Number(value))
+  })
+  return sumList.head
+}

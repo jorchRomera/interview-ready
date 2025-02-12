@@ -18,7 +18,7 @@ describe('partition', () => {
         node6.next = node7;
 
         const result = partition(node1, 5);
-        
+
         // Expected partitioned list: 3 -> 2 -> 1 -> 5 -> 8 -> 5 -> 10
         expect(result!.value).toEqual(3);
         expect(result!.next!.value).toEqual(2);
@@ -34,7 +34,7 @@ describe('partition', () => {
         const node1: Node<number> = { value: 5 };
 
         const result = partition(node1, 5);
-        
+
         // Expected partitioned list: 5
         expect(result!.value).toEqual(5);
         expect(result!.next).toBeUndefined();
@@ -53,7 +53,7 @@ describe('partition', () => {
         node4.next = node5;
 
         const result = partition(node1, 6);
-        
+
         // Expected partitioned list: 3 -> 2 -> 1 -> 4 -> 5
         expect(result!.value).toEqual(3);
         expect(result!.next!.value).toEqual(2);
@@ -75,7 +75,7 @@ describe('partition', () => {
         node4.next = node5;
 
         const result = partition(node1, 0);
-        
+
         // Expected partitioned list: 3 -> 2 -> 1 -> 4 -> 5
         expect(result!.value).toEqual(3);
         expect(result!.next!.value).toEqual(2);
