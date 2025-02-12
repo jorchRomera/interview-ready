@@ -28,10 +28,10 @@ export default function detectLoop<T>(
   const li = new LinkedList(head)
   let loop = null
   const visited = new Set<Node<T>>()
-  li.visit((node): boolean | void => {
+  li.visit((node): string | void => {
     if (visited.has(node)) {
       loop = node
-      return true
+      return 'break'
     }
     visited.add(node)
   })

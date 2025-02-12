@@ -40,7 +40,7 @@ export class LinkedList<T> {
     let p = this.head
 
     while (p) {
-      if (fn(p, index)) break
+      if (fn(p, index) === 'break') break
       p = p.next
       index++
     }
