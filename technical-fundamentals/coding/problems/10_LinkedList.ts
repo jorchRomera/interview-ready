@@ -35,17 +35,15 @@ export class LinkedList<T> {
     return list
   }
 
-  visit(fn: (node: Node<T>, index: number) => void) {
+  visit(fn: (node: Node<T>, index: number) => any) {
     let index = 0
     let p = this.head
+
     while (p) {
-      fn(p, index)
+      if (fn(p, index)) break
       p = p.next
       index++
     }
-  }
-
-  remove() {
   }
 
   merge(linkedList: LinkedList<T>) {
@@ -75,7 +73,9 @@ export class LinkedList<T> {
   //iterator(): LinkedListIterator {}
   length() {
     let length = 0
-    this.visit(() => length++)
+    this.visit(() => {
+      length++
+    })
     return length
   };
 }

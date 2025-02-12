@@ -18,7 +18,9 @@ export default function intersection<T>(
   const set: Set<Node<T>> = new Set()
 
   const li1 = new LinkedList<T>(list1)
-  li1.visit(node => set.add(node))
+  li1.visit(node => {
+    set.add(node)
+  })
 
   const li2 = new LinkedList<T>(list2)
   let ret: Node<T> | undefined

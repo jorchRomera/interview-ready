@@ -15,7 +15,7 @@
 // Hints: #50, #69, #83, #90
 // ```
 
-import { LinkedList } from "./10_LinkedList";
+import { LinkedList } from './10_LinkedList'
 
 export type Node<T> = {
   value: T;
@@ -24,4 +24,16 @@ export type Node<T> = {
 
 export default function detectLoop<T>(
   head: Node<T> | undefined,
-): Node<T> | null {}
+): Node<T> | null {
+  const li = new LinkedList(head)
+  let loop = null
+  const visited = new Set<Node<T>>()
+  li.visit((node): boolean | void => {
+    if (visited.has(node)) {
+      loop = node
+      return true
+    }
+    visited.add(node)
+  })
+  return loop
+}

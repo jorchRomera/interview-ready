@@ -7,10 +7,10 @@
     "test": "vitest ./**/problems/__tests__/*",
     "test-coding": "vitest ./coding/__tests__/*",
     "strings": "vitest strings --reporter=default --reporter=./silverReporter.ts",
-    "lists": "vitest ./**/problems/__tests__/lists/* --reporter=default --reporter=./silverReporter.ts",
-    "stacks": "vitest ./**/problems/__tests__/stacks/* --reporter=default --reporter=./silverReporter.ts",
-    "trees": "vitest ./**/problems/__tests__/trees/* --reporter=default --reporter=./silverReporter.ts",
-    "recursion": "vitest ./**/problems/__tests__/recursion/* --reporter=default --reporter=./silverReporter.ts"
+    "lists": "vitest lists --reporter=default --reporter=./silverReporter.ts",
+    "stacks": "vitest stacks --reporter=default --reporter=./silverReporter.ts",
+    "trees": "vitest trees --reporter=default --reporter=./silverReporter.ts",
+    "recursion": "vitest recursion --reporter=default --reporter=./silverReporter.ts"
   },
   "keywords": [
     "cracking",
