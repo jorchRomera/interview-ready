@@ -10,32 +10,60 @@
 // such as enqueue, dequeueAny, dequeueDog, and dequeueCat.
 // You may use the built-in LinkedList data structure.
 
-export type AnimalType = "dog" | "cat";
+import { LinkedList } from './10_LinkedList.js'
+
+export type AnimalType = 'dog' | 'cat';
 
 export class Animal {
-  type: AnimalType;
+  type: AnimalType
+
   constructor(type: AnimalType) {
-    this.type = type;
+    this.type = type
   }
 }
 
 export default class AnimalShelter {
+  dogs: Array<Animal> = []
+  cats: Array<Animal> = []
+  animals = new LinkedList<Animal>()
 
-    constructor() {
-    }
+  constructor() {
+  }
 
-    enqueue(type: AnimalType): void {
+  enqueue(type: AnimalType): void {
+    const newAnimal = new Animal(type)
+    if (type === 'dog') this.dogs.push(newAnimal)
+    else this.cats.push(newAnimal)
+    this.animals.push(newAnimal)
+  }
 
-    }
+  dequeueAny(): Animal | undefined {
+    const olderAnimal = this.animals.head?.value.type
+    if (!olderAnimal) return
+    if (olderAnimal === 'dog') return this.dequeueDog()
+    return this.dequeueCat()
+  }
 
-    dequeueAny(): Animal | undefined {
+  dequeueDog(): Animal | undefined {
+    this.dequeueAnimal('dog')
+    return this.dogs.shift()
+  }
 
-    }
+  dequeueCat(): Animal | undefined {
+    this.dequeueAnimal('cat')
+    return this.cats.shift()
+  }
 
-    dequeueDog(): Animal | undefined {
-    }
-
-    dequeueCat(): Animal | undefined {
-    }
+  private dequeueAnimal = (type: AnimalType)=> {
+    let dNode
+    this.animals.visit((node): any => {
+      if (node.value.type === type) {
+        dNode = node
+        return 'break'
+      }
+    })
+    if (!dNode) return undefined
+    this.animals.remove(dNode)
+  }
 }
 

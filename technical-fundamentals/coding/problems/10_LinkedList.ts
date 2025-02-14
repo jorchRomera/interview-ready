@@ -55,7 +55,7 @@ export class LinkedList<T> {
     return this
   }
 
-  print(linkedList: any) {
+  print(linkedList: LinkedList<T>) {
     let p = linkedList.head
     let log = ''
     while (p) {
@@ -78,4 +78,26 @@ export class LinkedList<T> {
     })
     return length
   };
+
+  remove(node: Node<T>): void {
+    if (node === this.head) {
+      if (this.head === this.tail) return this.head = this.tail = undefined
+      this.head = this.head!.next
+      return
+    }
+    let p = this.head
+    while (p?.next) {
+      if (p.next !== node) {
+        p = p.next
+        continue
+      }
+      if (p.next === this.tail) {
+        p.next = undefined
+        this.tail = p
+        return
+      }
+      p.next = p.next.next
+      return
+    }
+  }
 }

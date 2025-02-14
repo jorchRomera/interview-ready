@@ -8,7 +8,6 @@ describe("AnimalShelter", () => {
     shelter.enqueue("dog");
     shelter.enqueue("cat");
     shelter.enqueue("dog");
-
     // Dequeue any animal
     expect(shelter.dequeueAny()?.type).toBe("dog"); // Oldest animal is a dog
     expect(shelter.dequeueAny()?.type).toBe("cat"); // Oldest animal is a cat
