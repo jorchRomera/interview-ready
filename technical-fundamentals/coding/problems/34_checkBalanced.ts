@@ -11,5 +11,17 @@ export type TreeNode<T> = {
 };
 
 export default function checkBalanced<T>(tree?: TreeNode<T> | null): boolean {
+    if (!tree) return true
+    return isBalanced(tree)
+}
 
+function isBalanced<T>(tree?: TreeNode<T> | null): boolean {
+    if (!tree) return true
+    const isNodeBalanced = Math.abs(getHigh(tree.left) - getHigh(tree.right)) <= 1
+    return isBalanced(tree.left) && isBalanced(tree.right) && isNodeBalanced
+}
+
+function getHigh<T>(node: TreeNode<T> | undefined): number {
+    if (!node) return 0
+    return Math.max(getHigh(node.left), getHigh(node.right)) + 1
 }

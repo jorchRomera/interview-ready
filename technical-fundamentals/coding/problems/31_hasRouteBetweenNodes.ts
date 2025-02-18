@@ -11,4 +11,17 @@ export type GraphNode = {
 export default function hasRouteBetweenNodes(
   start: GraphNode,
   end: GraphNode,
-): boolean {}
+): boolean {
+  const stack = [start]
+  const set = new Set().add(start)
+  let n
+  while(n = stack.pop()) {
+    n.neighbors.forEach((node) => {
+      if (set.has(node)) return
+      set.add(node)
+      stack.push(node)
+    })
+    if (set.has(end)) return true
+  }
+  return false
+}
