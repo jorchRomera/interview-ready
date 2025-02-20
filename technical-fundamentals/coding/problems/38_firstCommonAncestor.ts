@@ -11,9 +11,21 @@ export type TreeNode<T> = {
 };
 
 export default function firstCommonAncestor<T>(
-  root: TreeNode<T> | undefined,
+  node: TreeNode<T> | undefined,
   p: TreeNode<T>,
   q: TreeNode<T>,
 ): TreeNode<T> | undefined {
+  if (!node) return
+  if (isChild(p, node.left)) {
+    if (isChild(q, node.right)) return node
+    return firstCommonAncestor(node?.left, p, q)
+  }
+  if (isChild(q, node)) return node
+  return firstCommonAncestor(node?.right, p, q)
+}
 
+function isChild<T>(findingNode: TreeNode<T>, rootNode?: TreeNode<T>): TreeNode<T> | undefined {
+  if (!rootNode) return
+  if (rootNode.value === findingNode.value) return rootNode
+  return isChild(findingNode, rootNode.left) || isChild(findingNode, rootNode.right)
 }

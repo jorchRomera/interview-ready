@@ -8,33 +8,33 @@ export type TreeNode<T> = {
   right?: TreeNode<T>;
 };
 
-// Gabi's solution on IR
-export default function validateBST<T>(
-  node: TreeNode<T> | undefined,
-): boolean {
-  if (!node) return true
-  const isBST = (node.left?.value || -Infinity) < node.value && (node.right?.value || Infinity) > node.value
-  const areChildrenBST = validateBST(node.left) && validateBST(node.right)
-
-  return isBST && areChildrenBST
-}
-
-//// My solution
+//// Gabi's solution on IR
 // export default function validateBST<T>(
 //   node: TreeNode<T> | undefined,
 // ): boolean {
 //   if (!node) return true
-//   return checkIfHigher(node.value, node.left) && checkIfLower(node.value, node.right) && validateBST(node.left) && validateBST(node.right)
-// }
+//   const isBST = (node.left?.value || -Infinity) < node.value && (node.right?.value || Infinity) > node.value
+//   const areChildrenBST = validateBST(node.left) && validateBST(node.right)
 //
-// function checkIfHigher<T>(value: T, node?: TreeNode<T>): boolean {
-//   if (!node) return true
-//   if (value < node.value) return false
-//   return checkIfHigher(value, node.left) && checkIfHigher(value, node.right)
+//   return isBST && areChildrenBST
 // }
-//
-// function checkIfLower<T>(value: T, node?: TreeNode<T>): boolean {
-//   if (!node) return true
-//   if (value > node.value) return false
-//   return checkIfLower(value, node.left) && checkIfLower(value, node.right)
-// }
+
+// My solution
+export default function validateBST<T>(
+  node: TreeNode<T> | undefined,
+): boolean {
+  if (!node) return true
+  return checkIfHigher(node.value, node.left) && checkIfLower(node.value, node.right) && validateBST(node.left) && validateBST(node.right)
+}
+
+function checkIfHigher<T>(value: T, node?: TreeNode<T>): boolean {
+  if (!node) return true
+  if (value < node.value) return false
+  return checkIfHigher(value, node.left) && checkIfHigher(value, node.right)
+}
+
+function checkIfLower<T>(value: T, node?: TreeNode<T>): boolean {
+  if (!node) return true
+  if (value > node.value) return false
+  return checkIfLower(value, node.left) && checkIfLower(value, node.right)
+}

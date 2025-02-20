@@ -12,5 +12,18 @@ export type TreeNode<T> = {
 };
 
 export default function successor<T>(node: TreeNode<T>): TreeNode<T> | undefined {
-    
+    return hasChildrenHigher(node.right) || hasParentHigher(node)
 }
+
+function hasChildrenHigher<T>(node?: TreeNode<T>): TreeNode<T> | undefined {
+    if (!node?.left) return node
+    if (!node.right) return node.left
+    return hasChildrenHigher(node.left) || hasChildrenHigher(node.right)
+}
+
+function hasParentHigher<T>(node?: TreeNode<T>): TreeNode<T> | undefined {
+    if (!node?.parent) return undefined
+    if (node === node.parent.left) return node.parent
+    return hasParentHigher(node.parent)
+}
+
