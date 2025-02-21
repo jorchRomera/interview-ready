@@ -17,31 +17,28 @@ export type TreeNode<T> = {
   right?: TreeNode<T>;
 };
 
-export default function bstSequences<T>(root: TreeNode<T>): T[][] {
-  const result: T[][] = [];
-  const allTreeValues: T[] = []
-  dfs(allTreeValues, root)
-  backtrack([], allTreeValues, result)
-  return result
-}
-
-function dfs<T>(allValues: T[], node?: TreeNode<T>) {
+function bfs<T>(treeValues: T[], node?: TreeNode<T>) {
   if (!node) return
-  allValues.push(node.value)
 
-  dfs(allValues, node.left)
-  dfs(allValues, node.right)
+  treeValues.push(node.value)
+  bfs(treeValues, node.left)
+  bfs(treeValues, node.right)
 }
 
-function backtrack<T>(path: T[], values: T[], result: T[][]) {
-  if (values.length === 0) {
-    result.push([...path]);
-    return;
-  }
+export default function bstSequences<T>(root: TreeNode<T>): T[][] {
+  const treeValues: T[] = []
+  bfs(treeValues, root)
+  const sequences: T[][] = []
+  permute([], treeValues, sequences)
+  return sequences
+}
 
-  for (let i = 0; i < values.length; i++) {
-    path.push(values[i]);
-    backtrack(path, [...values.slice(0, i), ...values.slice(i + 1)], result);
-    path.pop();
+function permute<T>(path: any[], treeValues: T[], sequences: T[][]) {
+  if (treeValues.length === 0) sequences.push([...path])
+
+  for (let i = 0; i < treeValues.length; i++) {
+    path.push(treeValues[i])
+    permute(path, [...treeValues.slice(0, i), ...treeValues.slice(i + 1)], sequences)
+    path.pop()
   }
 }

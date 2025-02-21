@@ -6,23 +6,23 @@
 // A binary search tree is a search where for each node,
 // lesser elements are on the left node, and greater elements on the right node.
 //
-// Input: [1,2,3,4,5,6,7,8]
-// Output:
-//      5
-//   2  |  7
-// 1   3|6   8
-//
-// Input: [1,2]
+// Input: [1,2,3]
 // Output:
 //      2
-//   1
-
-// Input: [1,2,3,4,5,6,7,8,9,10]
+//   1  |  3
+//
+// Input: [1,2,3,4,5]
 // Output:
-//        5
-//    4        9
-//  2        7   10
-//1   3     6  8
+//      3
+//    2    5
+//  1    4
+
+
+// Input: [1, 2, 3, 4, 5, 6, 7]
+// Output:
+//        4
+//     2      6
+//   1   3  5    7
 
 
 export type TreeNode<T> = {
@@ -35,10 +35,10 @@ export default function minimalTree<T>(
   sortedArray: T[],
 ): TreeNode<T> | undefined {
   if (!sortedArray.length) return
-  const midIndex = Math.floor(sortedArray.length / 2)
+  const half = Math.floor(sortedArray.length / 2)
   return {
-    value: sortedArray[midIndex],
-    left: minimalTree(sortedArray.slice(0, midIndex)),
-    right: minimalTree(sortedArray.slice(midIndex + 1)),
+    value: sortedArray[half],
+    left: minimalTree(sortedArray.slice(0, half)),
+    right: minimalTree(sortedArray.slice(half + 1))
   }
 }

@@ -24,17 +24,17 @@ export default function validateBST<T>(
   node: TreeNode<T> | undefined,
 ): boolean {
   if (!node) return true
-  return checkIfHigher(node.value, node.left) && checkIfLower(node.value, node.right) && validateBST(node.left) && validateBST(node.right)
+  return areChildrenLower(+node.value, node.left) && areChildrenHigher(+node.value, node.right)
 }
 
-function checkIfHigher<T>(value: T, node?: TreeNode<T>): boolean {
+function areChildrenLower<T>(parentValue: number, node?: TreeNode<T> ): boolean {
   if (!node) return true
-  if (value < node.value) return false
-  return checkIfHigher(value, node.left) && checkIfHigher(value, node.right)
+  if (parentValue <= +node.value) return false
+  return areChildrenLower(parentValue, node.left) && areChildrenLower(parentValue, node.right)
 }
 
-function checkIfLower<T>(value: T, node?: TreeNode<T>): boolean {
+function areChildrenHigher<T>(parentValue: number, node?: TreeNode<T> ): boolean {
   if (!node) return true
-  if (value > node.value) return false
-  return checkIfLower(value, node.left) && checkIfLower(value, node.right)
+  if (parentValue >= +node.value) return false
+  return areChildrenHigher(parentValue, node.left) && areChildrenHigher(parentValue, node.right)
 }

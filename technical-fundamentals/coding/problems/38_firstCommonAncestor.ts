@@ -4,6 +4,14 @@
 // in a binary tree. Avoid storing additional nodes in a data structure.
 // NOTE: This is not necessarily a binary search tree.
 
+/*
+             1
+            / \
+           2   3
+          / \ / \
+         4  5 6  7
+ */
+
 export type TreeNode<T> = {
   value: T;
   left?: TreeNode<T>;
@@ -16,16 +24,12 @@ export default function firstCommonAncestor<T>(
   q: TreeNode<T>,
 ): TreeNode<T> | undefined {
   if (!node) return
-  if (isChild(p, node.left)) {
-    if (isChild(q, node.right)) return node
-    return firstCommonAncestor(node?.left, p, q)
-  }
-  if (isChild(q, node)) return node
-  return firstCommonAncestor(node?.right, p, q)
+  if (!isChild(p, node) || !isChild(q, node)) return
+  return firstCommonAncestor(node.left, p, q) || firstCommonAncestor(node.right, p, q) || node
 }
 
-function isChild<T>(findingNode: TreeNode<T>, rootNode?: TreeNode<T>): TreeNode<T> | undefined {
-  if (!rootNode) return
-  if (rootNode.value === findingNode.value) return rootNode
-  return isChild(findingNode, rootNode.left) || isChild(findingNode, rootNode.right)
+function isChild<T>(comparingNode: TreeNode<T>, node?: TreeNode<T>): boolean {
+  if (!node) return false
+  if (comparingNode === node) return true
+  return isChild(comparingNode, node?.left) || isChild(comparingNode, node.right)
 }

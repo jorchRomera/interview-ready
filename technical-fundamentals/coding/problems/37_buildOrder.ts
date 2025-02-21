@@ -13,44 +13,78 @@
 // Output: e, f, a, b, d, c
 // ```
 
-// this solution is buildOrder3 but sorted
 export default function buildOrder(projects: string[], dependencies: string[][]): string[] | string {
-  const projectOrder: string[] = []
-  if (!projects.length) return projectOrder
-  const projectsStore: Map<string, string[]> = new Map()
-  const dependencyCount: Map<string, number> = new Map()
-  projects.forEach(project => {
-    projectsStore.set(project, [])
-    dependencyCount.set(project, 0)
-  })
-
-  for (const [dependency, dependant] of dependencies) {
-    projectsStore.get(dependency)?.push(dependant)
-    dependencyCount.set(dependant, (dependencyCount.get(dependant) || 0) + 1)
+  const projectsOrder: string[] = []
+  const dependenciesMap = transformDependenciesIntoMap(dependencies)
+  while (projectsOrder.length !== projects.length) {
+    let flag = 0
+    for (let i = 0; i < projects.length; i++){
+      const project = projects[i]
+      if (!projectsOrder.includes(project) && !dependenciesMap.get(project)) {
+        addProjectToBuildOrder(project, projectsOrder, dependencies, dependenciesMap)
+        flag++
+      }
+    }
+    if (!flag) throw Error('No valid build order exists')
   }
-
-  // I'm not too happy about sorting this. But I had to do it because of the deterministic nature of the test.
-  for (const dependants of projectsStore.values()) {
-    dependants.sort()
-  }
-
-  const queue: string[] = []
-  for (const [dependant, count] of dependencyCount) {
-    if (!count) queue.push(dependant)
-  }
-
-  while (queue.length) {
-    const projectBuilt = queue.shift()
-    projectOrder.push(projectBuilt!)
-    const dependantsToBeUpdated = projectsStore.get(projectBuilt!)
-    dependantsToBeUpdated?.forEach(dependant => {
-      dependencyCount.set(dependant, dependencyCount.get(dependant)! - 1)
-      if (dependencyCount.get(dependant) === 0) queue.push(dependant)
-    })
-  }
-  if (projectOrder.length !== projects.length) throw new Error('No valid build order exists')
-  return projectOrder
+  return projectsOrder
 }
+
+function transformDependenciesIntoMap(dependencies:  string[][]): Map<string, number> {
+  const map: Map<string, number> = new Map()
+  dependencies.forEach((dependency) => {
+    if (!map.get(dependency[1])) map.set(dependency[1], 1)
+    else map.set(dependency[1], map.get(dependency[1])! + 1)
+  })
+  return map
+}
+
+
+function addProjectToBuildOrder(project: string, buildOrder: string[], dependencies: string[][], dependencyMap: Map<string, number>) {
+  buildOrder.push(project)
+  for(const [dependency, dependant] of dependencies) {
+    if (project !== dependency) continue
+    dependencyMap.set(dependant, dependencyMap.get(dependant)! - 1)
+  }
+}
+// this solution is buildOrder3 but sorted
+// export default function buildOrder4(projects: string[], dependencies: string[][]): string[] | string {
+//   const projectOrder: string[] = []
+//   if (!projects.length) return projectOrder
+//   const projectsStore: Map<string, string[]> = new Map()
+//   const dependencyCount: Map<string, number> = new Map()
+//   projects.forEach(project => {
+//     projectsStore.set(project, [])
+//     dependencyCount.set(project, 0)
+//   })
+//
+//   for (const [dependency, dependant] of dependencies) {
+//     projectsStore.get(dependency)?.push(dependant)
+//     dependencyCount.set(dependant, (dependencyCount.get(dependant) || 0) + 1)
+//   }
+//
+//   // I'm not too happy about sorting this. But I had to do it because of the deterministic nature of the test.
+//   for (const dependants of projectsStore.values()) {
+//     dependants.sort()
+//   }
+//
+//   const queue: string[] = []
+//   for (const [dependant, count] of dependencyCount) {
+//     if (!count) queue.push(dependant)
+//   }
+//
+//   while (queue.length) {
+//     const projectBuilt = queue.shift()
+//     projectOrder.push(projectBuilt!)
+//     const dependantsToBeUpdated = projectsStore.get(projectBuilt!)
+//     dependantsToBeUpdated?.forEach(dependant => {
+//       dependencyCount.set(dependant, dependencyCount.get(dependant)! - 1)
+//       if (dependencyCount.get(dependant) === 0) queue.push(dependant)
+//     })
+//   }
+//   if (projectOrder.length !== projects.length) throw new Error('No valid build order exists')
+//   return projectOrder
+// }
 
 
 // sadly this fails because in the test doesn't say that there's a unique valid build order. So I'll need to implement some kind of sort

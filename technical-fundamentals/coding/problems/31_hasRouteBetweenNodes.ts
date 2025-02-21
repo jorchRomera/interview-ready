@@ -12,16 +12,17 @@ export default function hasRouteBetweenNodes(
   start: GraphNode,
   end: GraphNode,
 ): boolean {
-  const stack = [start]
-  const set = new Set().add(start)
+  const set = new Set()
+  const queue = [start]
+  set.add(start)
   let n
-  while(n = stack.pop()) {
-    n.neighbors.forEach((node) => {
-      if (set.has(node)) return
-      set.add(node)
-      stack.push(node)
-    })
-    if (set.has(end)) return true
+  while (n = queue.shift()) {
+    for (const neighbor of n.neighbors) {
+      if (set.has(neighbor)) continue
+      if (neighbor === end) return true
+      set.add(neighbor)
+      queue.push(neighbor)
+    }
   }
   return false
 }
